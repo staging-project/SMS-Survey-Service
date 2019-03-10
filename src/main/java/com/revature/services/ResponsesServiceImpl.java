@@ -34,4 +34,16 @@ public class ResponsesServiceImpl implements ResponsesService {
 		return responseRepo.findByUserEmail(userEmail);
 	}
 
+	@Override
+	public Responses save(Responses r) {
+		r.setId(0);
+		return responseRepo.save(r);
+	}
+
+	@Override
+	public Responses delete(Responses r) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
 }
