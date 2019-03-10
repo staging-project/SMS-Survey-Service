@@ -1,10 +1,14 @@
 package com.revature.models;
 
 import javax.persistence.Column;
+import javax.persistence.Embeddable;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 import javax.validation.constraints.Min;
 import javax.validation.constraints.NotNull;
@@ -16,7 +20,6 @@ import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 @Entity
 @Table(name= "answers")
 @JsonIgnoreProperties({ "hibernateLazyInitializer", "handler" })
-//@JsonFilter("depth_3")
 public class Answers {
 
 	@Id
@@ -27,19 +30,20 @@ public class Answers {
 	@NotNull
 	private String answer;
 	
-	
-	private int questionId;
+	@ManyToOne(fetch = FetchType.LAZY)
+	@JoinColumn(name = "question_id")
+	private Question questionId;
 	
 	public Answers() {
 		
 		super();
 	}
-	
-	public Answers(int id, String answer, int questionId) {
-		this.id=id;
-		this.answer=answer;
-		this.questionId=questionId;
-		
+
+	public Answers(int id, @NotNull String answer, Question questionId) {
+		super();
+		this.id = id;
+		this.answer = answer;
+		this.questionId = questionId;
 	}
 
 	public int getId() {
@@ -58,11 +62,11 @@ public class Answers {
 		this.answer = answer;
 	}
 
-	public int getquestionId() {
+	public Question getQuestionId() {
 		return questionId;
 	}
 
-	public void setquestionId(int questionId) {
+	public void setQuestionId(Question questionId) {
 		this.questionId = questionId;
 	}
 
@@ -72,7 +76,7 @@ public class Answers {
 		int result = 1;
 		result = prime * result + ((answer == null) ? 0 : answer.hashCode());
 		result = prime * result + id;
-		result = prime * result + questionId;
+		result = prime * result + ((questionId == null) ? 0 : questionId.hashCode());
 		return result;
 	}
 
@@ -92,17 +96,18 @@ public class Answers {
 			return false;
 		if (id != other.id)
 			return false;
-		if (questionId != other.questionId)
+		if (questionId == null) {
+			if (other.questionId != null)
+				return false;
+		} else if (!questionId.equals(other.questionId))
 			return false;
 		return true;
 	}
 
 	@Override
 	public String toString() {
-		return "Answers [id=" + id + ", answer=" + answer + ", questionId=" + questionId + "]";
+		return "Answers [id=" + id + ", answer=" + answer + "]";
 	}
-	
-	
 	
 	
 }

@@ -1,12 +1,18 @@
 package com.revature.models;
 
 import java.util.Date;
+import java.util.List;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.JoinTable;
+import javax.persistence.ManyToMany;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.validation.constraints.NotNull;
 
@@ -39,9 +45,13 @@ public class Survey {
 	private boolean template;
 	
 	private boolean published;
+	
+	@ManyToMany(fetch = FetchType.LAZY)
+	@JoinTable(name = "junction_survey_questions", joinColumns = @JoinColumn(name = "survey_id"), inverseJoinColumns = @JoinColumn(name = "question_id"))
+	private List<Question> allQuestions;
 
 	public Survey(int surveyId, @NotNull String title, @NotNull String description, @NotNull Date dateCreated,
-			@NotNull Date closingDate, boolean template, boolean published) {
+			@NotNull Date closingDate, boolean template, boolean published, List<Question> allQuestions) {
 		super();
 		this.surveyId = surveyId;
 		this.title = title;
@@ -50,117 +60,83 @@ public class Survey {
 		this.closingDate = closingDate;
 		this.template = template;
 		this.published = published;
-	}
-	
-	public Survey() {
-		super();
+		this.allQuestions = allQuestions;
 	}
 
-	/**
-	 * @return the surveyId
-	 */
+	public Survey() {
+		super();
+		// TODO Auto-generated constructor stub
+	}
+
 	public int getSurveyId() {
 		return surveyId;
 	}
 
-	/**
-	 * @param surveyId the surveyId to set
-	 */
 	public void setSurveyId(int surveyId) {
 		this.surveyId = surveyId;
 	}
 
-	/**
-	 * @return the title
-	 */
 	public String getTitle() {
 		return title;
 	}
 
-	/**
-	 * @param title the title to set
-	 */
 	public void setTitle(String title) {
 		this.title = title;
 	}
 
-	/**
-	 * @return the description
-	 */
 	public String getDescription() {
 		return description;
 	}
 
-	/**
-	 * @param description the description to set
-	 */
 	public void setDescription(String description) {
 		this.description = description;
 	}
 
-	/**
-	 * @return the dateCreated
-	 */
 	public Date getDateCreated() {
 		return dateCreated;
 	}
 
-	/**
-	 * @param dateCreated the dateCreated to set
-	 */
 	public void setDateCreated(Date dateCreated) {
 		this.dateCreated = dateCreated;
 	}
 
-	/**
-	 * @return the closingDate
-	 */
 	public Date getClosingDate() {
 		return closingDate;
 	}
 
-	/**
-	 * @param closingDate the closingDate to set
-	 */
 	public void setClosingDate(Date closingDate) {
 		this.closingDate = closingDate;
 	}
 
-	/**
-	 * @return the template
-	 */
 	public boolean isTemplate() {
 		return template;
 	}
 
-	/**
-	 * @param template the template to set
-	 */
 	public void setTemplate(boolean template) {
 		this.template = template;
 	}
 
-	/**
-	 * @return the published
-	 */
 	public boolean isPublished() {
 		return published;
 	}
 
-	/**
-	 * @param published the published to set
-	 */
 	public void setPublished(boolean published) {
 		this.published = published;
 	}
 
-	/* (non-Javadoc)
-	 * @see java.lang.Object#hashCode()
-	 */
+	public List<Question> getAllQuestions() {
+		return allQuestions;
+	}
+
+	public void setAllQuestions(List<Question> allQuestions) {
+		this.allQuestions = allQuestions;
+	}
+
 	@Override
 	public int hashCode() {
 		final int prime = 31;
 		int result = 1;
+		result = prime * result + ((allQuestions == null) ? 0 : allQuestions.hashCode());
 		result = prime * result + ((closingDate == null) ? 0 : closingDate.hashCode());
 		result = prime * result + ((dateCreated == null) ? 0 : dateCreated.hashCode());
 		result = prime * result + ((description == null) ? 0 : description.hashCode());
@@ -171,9 +147,6 @@ public class Survey {
 		return result;
 	}
 
-	/* (non-Javadoc)
-	 * @see java.lang.Object#equals(java.lang.Object)
-	 */
 	@Override
 	public boolean equals(Object obj) {
 		if (this == obj)
@@ -183,6 +156,11 @@ public class Survey {
 		if (getClass() != obj.getClass())
 			return false;
 		Survey other = (Survey) obj;
+		if (allQuestions == null) {
+			if (other.allQuestions != null)
+				return false;
+		} else if (!allQuestions.equals(other.allQuestions))
+			return false;
 		if (closingDate == null) {
 			if (other.closingDate != null)
 				return false;
@@ -212,14 +190,11 @@ public class Survey {
 		return true;
 	}
 
-	/* (non-Javadoc)
-	 * @see java.lang.Object#toString()
-	 */
 	@Override
 	public String toString() {
 		return "Survey [surveyId=" + surveyId + ", title=" + title + ", description=" + description + ", dateCreated="
 				+ dateCreated + ", closingDate=" + closingDate + ", template=" + template + ", published=" + published
-				+ "]";
-	}	
+				+ ", allQuestions=" + allQuestions + "]";
+	}
 	
 }

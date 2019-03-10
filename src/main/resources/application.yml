@@ -67,4 +67,6 @@ user-service:
   ribbon:
     listOfServers: ${GATEWAY_URL}
     
-
+---
+hibernate:
+  show_sql: true
