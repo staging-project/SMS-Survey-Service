@@ -16,7 +16,7 @@ import com.revature.models.History;
 import com.revature.services.HistoryService;
 
 @RestController
-@RequestMapping("history")
+@RequestMapping("surveys/history")
 public class HistoryController {
 
 	@Autowired

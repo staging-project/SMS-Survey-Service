@@ -12,7 +12,7 @@ import com.revature.models.QuestionType;
 import com.revature.services.QuestionTypeService;
 
 @RestController
-@RequestMapping(value = "questiontype")
+@RequestMapping(value = "surveys/questiontype")
 public class QuestionTypeController {
 
 	@Autowired

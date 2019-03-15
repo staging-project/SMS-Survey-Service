@@ -16,7 +16,7 @@ import com.revature.models.Question;
 import com.revature.services.QuestionService;
 
 @RestController
-@RequestMapping("questions")
+@RequestMapping("surveys/questions")
 public class QuestionController {
 
 	@Autowired

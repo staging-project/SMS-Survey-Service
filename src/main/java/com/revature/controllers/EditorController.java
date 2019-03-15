@@ -22,7 +22,7 @@ import com.revature.models.Editor;
 import com.revature.services.EditorServiceImpl;
 
 @RestController
-@RequestMapping("editors")//Maps this class to table editors in DB
+@RequestMapping("surveys/editors")//Maps this class to table editors in DB
 public class EditorController {
     
 	//Tells Spring to connect bean automatically

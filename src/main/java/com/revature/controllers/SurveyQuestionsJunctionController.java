@@ -16,7 +16,7 @@ import com.revature.models.SurveyQuestionsJunction;
 import com.revature.services.SurveyQuestionsJunctionService;
 
 @RestController
-@RequestMapping("junction_survey_questions")
+@RequestMapping("surveys/junction_survey_questions")
 public class SurveyQuestionsJunctionController {
 	
 	@Autowired

@@ -19,7 +19,7 @@ import com.revature.models.Answers;
 import com.revature.services.AnswersService;
 
 @RestController
-@RequestMapping("answers")
+@RequestMapping("surveys/answers")
 public class AnswersController {
 
 	@Autowired 
